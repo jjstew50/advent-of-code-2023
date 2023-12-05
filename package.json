@@ -1,0 +1,11 @@
+{
+  "name": "advent-of-code",
+  "version": "1.0.0",
+  "description": "Coding problems daily during the month of December",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jason Stewart",
+  "license": "ISC"
+}
