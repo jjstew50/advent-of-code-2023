@@ -41,14 +41,13 @@ const sumInput = () => {
     inputArray.forEach((line) => {
         const match = line.match(regexPattern) || [];
         if (match) {
-            console.log(match);
             const firstDigit = match[0];
             const lastDigit = match[match.length - 1];
             // console.log("FIRST DIGIT: ", checkNumber(firstDigit, true))
             // console.log("LAST DIGIT: ", checkNumber(lastDigit, false))
 
             const number = String(checkNumber(firstDigit, true)) + String(checkNumber(lastDigit, false));
-            console.log("NUMBER: ",number);
+            console.log("NUMBER: ",number, match);
             sum += Number(number);
           } else {
             console.log("No digit found in the string.");
