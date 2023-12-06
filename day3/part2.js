@@ -17,9 +17,9 @@ const parseInput = () => {
     console.log(inputArray)
     return inputArray;
 }
-
+8
 const symbolRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
-const symbolRegex1 = /[!@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]+/;
+const symbolRegex1 = /[*]+/;
 
 
 
@@ -28,6 +28,7 @@ function getNumbersTouchingSymbol(matrix, symbol) {
     const rows = matrix.length;
     const cols = matrix[0].length;
     const result = [];
+    var sum = 0;
   
     // Helper function to check if coordinates are within the matrix bounds
     const isValid = (row, col) => row >= 0 && row < rows && col >= 0 && col < cols;
@@ -86,7 +87,7 @@ function getNumbersTouchingSymbol(matrix, symbol) {
             [1, 1],    // Diagonal Down-Right
           ];
 
-          var numList = new Set();
+          var numList = [];
   
           directions.forEach(([rowDiff, colDiff]) => {
             let nextRow = i;
@@ -100,27 +101,31 @@ function getNumbersTouchingSymbol(matrix, symbol) {
                     console.log("NEXT VALUE: ", nextValue)
                     var num, tuple = getFullNumber(nextRow+rowDiff, nextCol+colDiff, matrix, nextValue)
                     console.log("TUPLE: ", tuple)
-                    numList.add(tuple);
+                    numList.push(tuple);
                 }
             }
             else{
                 console.log("INVALID")
             }
-            console.log(numList)
-            result.push(...numList);
+            console.log("NUMLIST:", numList)
+            const uniqueArrays = Array.from(new Set(numList.map(JSON.stringify)), JSON.parse);
+            console.log("UNIQUE ARRAY: ", uniqueArrays)
+            if(uniqueArrays.length ==2){
+                result.push(uniqueArrays);
+            }
             // console.log("RESULT: ", result)
-            // console.log(result.length)
+            // console.log(result.length)           
           });
         }
       }
     }
 
-    console.log(new Set(result))
+    // console.log(new Set(result))
     const uniqueArrays = Array.from(new Set(result.map(JSON.stringify)), JSON.parse);
     console.log("UNIQUE ARRAY: ", uniqueArrays)
-    var sum = 0;
+    // var sum = 0;
     uniqueArrays.forEach((array) => {
-        sum += Number(array[0]);
+        sum += Number(array[0][0]) * Number(array[1][0]);
     })
   
     return sum;
