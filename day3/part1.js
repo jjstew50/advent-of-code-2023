@@ -22,8 +22,6 @@ const symbolRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 const symbolRegex1 = /[!@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]+/;
 
 
-
-
 function getNumbersTouchingSymbol(matrix, symbol) {
     const rows = matrix.length;
     const cols = matrix[0].length;
@@ -34,8 +32,6 @@ function getNumbersTouchingSymbol(matrix, symbol) {
 
     function getFullNumber(row, col, matrix, num){
         const myTuple = [num, row, col, 1];
-        console.log("NUMBER: ", num)
-        console.log("MyTuple: ", myTuple)
         number = checkLeft(row, col, matrix, num, myTuple)
         number = checkRight(row, col, matrix, number, myTuple)
         myTuple[0] = number;
@@ -43,29 +39,21 @@ function getNumbersTouchingSymbol(matrix, symbol) {
     }
 
     function checkLeft(row, col, matrix, num, myTuple){
-        console.log("CHECKING LEFT")
         if (!symbolRegex.test(matrix[row][col-1]) && isValid(row, col-1)){
-            console.log("LEFT: ", matrix[row][col-1])
-            console.log("NUM: ", num)
             num = String(matrix[row][col-1]) + String(num);
             myTuple[2] = col-1;
             myTuple[3] += 1;
             return checkLeft(row, col-1, matrix, num, myTuple)
         }
-        console.log("FINISHED CHECKING LEFT")
-        console.log("FINAL LEFT NUM: ", num)
         return num;
     }
 
     function checkRight(row, col, matrix, num, myTuple){
-        console.log("CHECKING RIGHT")
         if (!symbolRegex.test(matrix[row][col+1]) && isValid(row, col+1)){
-            console.log("RIGHT: ", matrix[row][col+1])
             num = num + matrix[row][col+1];
             myTuple[3] += 1;
             return checkRight(row, col+1, matrix, num, myTuple)
         }
-        console.log("FINISHED CHECKING RIGHT")
         return num;
       }
   
@@ -91,15 +79,10 @@ function getNumbersTouchingSymbol(matrix, symbol) {
           directions.forEach(([rowDiff, colDiff]) => {
             let nextRow = i;
             let nextCol = j;
-            let wholeNumber = '';
-            console.log("COORDS: ", nextRow, nextCol)
-            console.log("DIFFS: ", rowDiff, colDiff)
             if (isValid(nextRow+rowDiff, nextCol+colDiff)){
                 const nextValue = matrix[nextRow+rowDiff][nextCol+colDiff];
                 if(!isNaN(Number(nextValue))){
-                    console.log("NEXT VALUE: ", nextValue)
                     var num, tuple = getFullNumber(nextRow+rowDiff, nextCol+colDiff, matrix, nextValue)
-                    console.log("TUPLE: ", tuple)
                     numList.add(tuple);
                 }
             }
@@ -108,8 +91,6 @@ function getNumbersTouchingSymbol(matrix, symbol) {
             }
             console.log(numList)
             result.push(...numList);
-            // console.log("RESULT: ", result)
-            // console.log(result.length)
           });
         }
       }
@@ -117,7 +98,6 @@ function getNumbersTouchingSymbol(matrix, symbol) {
 
     console.log(new Set(result))
     const uniqueArrays = Array.from(new Set(result.map(JSON.stringify)), JSON.parse);
-    console.log("UNIQUE ARRAY: ", uniqueArrays)
     var sum = 0;
     uniqueArrays.forEach((array) => {
         sum += Number(array[0]);
@@ -125,23 +105,6 @@ function getNumbersTouchingSymbol(matrix, symbol) {
   
     return sum;
   }
-
-
-
-  
-  // Example usage:
-  const inputMatrix = [
-    "467..114..",
-    "...*......",
-    "..35..633.",
-    "......#...",
-    "617*......",
-    ".....+.58.",
-    "..592.....",
-    "......755.",
-    "...$.*....",
-    ".664.598.."
-  ];
 
   var matrix = parseInput();
   
